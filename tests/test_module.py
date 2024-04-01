@@ -12,7 +12,7 @@ from .strategies import med_ints, small_floats
 
 # This example builds a module
 # as shown at https://minitorch.github.io/modules.html
-# and checks that its properties work..
+# and checks that its properties work...
 
 
 class ModuleA1(minitorch.Module):
