@@ -27,7 +27,7 @@ from minitorch.operators import (
 
 from .strategies import assert_close, small_floats
 
-# ## Task 0.1 Basic hypothesis tests.
+# ### Task 0.1 Basic hypothesis tests.
 
 
 @pytest.mark.task0_1
