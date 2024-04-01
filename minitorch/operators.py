@@ -147,8 +147,7 @@ def relu_back(x: float, d: float) -> float:
 
 
 def map(
-        fn: Callable[[float], float]
-        ) -> Callable[[Iterable[float]], Iterable[float]]:
+        fn: Callable[[float], float]) -> Callable[[Iterable[float]], Iterable[float]]:
     """
     Higher-order map.
 
@@ -197,9 +196,7 @@ def zipWith(
     """
 
     # TODO: Implement for Task 0.3.
-    def zipper(
-            lst1: Iterable[float], lst2: Iterable[float]
-            ) -> Iterable[float]:
+    def zipper(lst1: Iterable[float], lst2: Iterable[float]) -> Iterable[float]:
         return [fn(x, y) for x, y in zip(lst1, lst2)]
 
     return zipper
