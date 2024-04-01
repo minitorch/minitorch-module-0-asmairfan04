@@ -2,7 +2,7 @@
   "tests": [
     {
       "name": "Module0 Test",
-      "setup": "sudo -H pip3 install pytest,sudo pip3 install hypothesis",
+      "setup": "sudo -H pip3 install pytest hypothesis",
       "run": "pytest",
       "input": "",
       "output": "",
