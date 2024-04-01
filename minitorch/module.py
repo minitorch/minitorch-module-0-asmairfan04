@@ -63,13 +63,13 @@ class Module:
         # return named_params
         # TODO: Implement for Task 0.4.
         # raise NotImplementedError("Need to implement for Task 0.4")
-        def _named_parameters(module, prefix=""):
-            for name, param in module._parameters.items():
-                yield prefix + name, param
-            for name, module in module._modules.items():
-                yield from _named_parameters(module, prefix + name + ".")
-
-        return list(_named_parameters(self))
+        named_params = []
+        for module_name, module in self._modules.items():
+            for name, nested_param in module.named_parameters():
+                named_params.append((f"{module_name}.{name}", nested_param))
+        for param_name, param in self._parameters.items():
+            named_params.append((param_name, param))
+        return named_params
 
     def parameters(self) -> Sequence[Parameter]:
         "Enumerate over all the parameters of this module and its descendents."
@@ -77,7 +77,11 @@ class Module:
         # return self.named_parameters().values()
         # return self.named_parameters().values()
         # raise NotImplementedError("Need to implement for Task 0.4")
-        return [param for _, param in self.named_parameters()]
+        # return [param for _, param in self.named_parameters()]
+        params = []
+        for _, param in self.named_parameters():
+            params.append(param)
+        return params
 
     def add_parameter(self, k: str, v: Any) -> Parameter:
         """
