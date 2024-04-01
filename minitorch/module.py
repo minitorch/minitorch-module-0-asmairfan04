@@ -67,7 +67,7 @@ class Module:
     def parameters(self) -> Sequence[Parameter]:
         "Enumerate over all the parameters of this module and its descendents."
         # TODO: Implement for Task 0.4.
-        return list(self.named_parameters().values())
+        return self.named_parameters().values()
         # return self.named_parameters().values()
         # raise NotImplementedError("Need to implement for Task 0.4")
 
