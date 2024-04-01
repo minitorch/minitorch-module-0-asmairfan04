@@ -33,7 +33,8 @@ from .strategies import assert_close, small_floats
 @pytest.mark.task0_1
 @given(small_floats, small_floats)
 def test_same_as_python(x: float, y: float) -> None:
-    "Check that the main operators all return the same value of the python version"
+    """Check that the main operators all return the same
+    value of the python version"""
     assert_close(mul(x, y), x * y)
     assert_close(add(x, y), x + y)
     assert_close(neg(x), -x)
@@ -108,7 +109,18 @@ def test_sigmoid(a: float) -> None:
     * It is  strictly increasing.
     """
     # TODO: Implement for Task 0.2.
-    raise NotImplementedError("Need to implement for Task 0.2")
+    assert 0.0 <= sigmoid(a) <= 1.0
+    assert pytest.approx(1.0 - sigmoid(a), abs=1e-6) == sigmoid(-a)
+    if a == 0.0:
+        assert pytest.approx(sigmoid(a), abs=1e-6) == 0.5
+    else:
+        sigmoid(a)
+
+    if a >= 0.0:
+        assert sigmoid(a + 1e-6) >= sigmoid(a)
+    elif a <= 0.0:
+        assert sigmoid(a - 1e-6) <= sigmoid(a)
+    # raise NotImplementedError("Need to implement for Task 0.2")
 
 
 @pytest.mark.task0_2
@@ -116,27 +128,36 @@ def test_sigmoid(a: float) -> None:
 def test_transitive(a: float, b: float, c: float) -> None:
     "Test the transitive property of less-than (a < b and b < c implies a < c)"
     # TODO: Implement for Task 0.2.
-    raise NotImplementedError("Need to implement for Task 0.2")
+    if a < b:
+        if b < c:
+            assert a < c
+
+    # raise NotImplementedError("Need to implement for Task 0.2")
 
 
 @pytest.mark.task0_2
-def test_symmetric() -> None:
+@given(small_floats, small_floats)
+def test_symmetric(a: float, b: float) -> None:
     """
-    Write a test that ensures that :func:`minitorch.operators.mul` is symmetric, i.e.
+    Write a test that ensures that :func:`minitorch.operators.mul`
+     is symmetric, i.e.
     gives the same value regardless of the order of its input.
     """
     # TODO: Implement for Task 0.2.
-    raise NotImplementedError("Need to implement for Task 0.2")
+    assert mul(a, b) == mul(b, a)
+    # raise NotImplementedError("Need to implement for Task 0.2")
 
 
 @pytest.mark.task0_2
-def test_distribute() -> None:
+@given(small_floats, small_floats, small_floats)
+def test_distribute(x: float, y: float, z: float) -> None:
     r"""
     Write a test that ensures that your operators distribute, i.e.
     :math:`z \times (x + y) = z \times x + z \times y`
     """
     # TODO: Implement for Task 0.2.
-    raise NotImplementedError("Need to implement for Task 0.2")
+    assert mul(z, add(x, y)) == pytest.approx(add(mul(z, x), mul(z, y)))
+    # raise NotImplementedError("Need to implement for Task 0.2")
 
 
 @pytest.mark.task0_2
@@ -145,10 +166,16 @@ def test_other() -> None:
     Write a test that ensures some other property holds for your functions.
     """
     # TODO: Implement for Task 0.2.
-    raise NotImplementedError("Need to implement for Task 0.2")
+    assert id(5) == 5
+    assert id(-10) == -10
+    assert id(0) == 0
 
+    assert neg(neg(3)) == 3
+    assert neg(neg(-7)) == -7
+    assert neg(neg(0)) == 0
+    # raise NotImplementedError("Need to implement for Task 0.2")
 
-# ## Task 0.3  - Higher-order functions
+# Task 0.3  - Higher-order functions
 
 # These tests check that your higher-order functions obey basic
 # properties.
@@ -173,8 +200,11 @@ def test_sum_distribute(ls1: List[float], ls2: List[float]) -> None:
     Write a test that ensures that the sum of `ls1` plus the sum of `ls2`
     is the same as the sum of each element of `ls1` plus each element of `ls2`.
     """
+    sum1 = sum(ls1) + sum(ls2)
+    sum2 = sum([a + b for a, b in zip(ls1, ls2)])
+    assert pytest.approx(sum1) == pytest.approx(sum2)
     # TODO: Implement for Task 0.3.
-    raise NotImplementedError("Need to implement for Task 0.3")
+    # raise NotImplementedError("Need to implement for Task 0.3")
 
 
 @pytest.mark.task0_3
